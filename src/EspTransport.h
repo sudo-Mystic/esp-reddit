@@ -4,8 +4,8 @@
 //
 // TLS trust (in order):
 //   1. setCaCert(pem) — pin your own CA (smallest flash cost).
-//   2. Default — the arduino-esp32 built-in Mozilla CA bundle
-//      (setCACertBundle). Correct, survives CA rotation.
+//   2. Default — curated root set in RedditRootCA.h (GlobalSign, Google
+//      Trust Services, DigiCert, Let's Encrypt), ~11KB flash.
 //   3. config.insecureTls = true — skip validation entirely. Debug only.
 //
 // NOTE: the ESP32 has no RTC. Call configTime()/NTP sync after WiFi

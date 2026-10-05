@@ -45,7 +45,9 @@ std::string withPrefix(const std::string& v, const char* prefix) {
 
 void fillSubmission(JsonObject d, Submission& s) {
   s.id = d["id"] | "";
-  s.fullname = d["name"] | "";
+  // Prefer "name" (fullname); some shapes only carry the bare id.
+  const std::string name = d["name"] | "";
+  s.fullname = name.empty() ? withPrefix(s.id, "t3_") : name;
   s.title = d["title"] | "";
   s.selftext = d["selftext"] | "";
   s.url = d["url"] | "";
@@ -69,7 +71,8 @@ void fillSubmission(JsonObject d, Submission& s) {
 
 void fillComment(JsonObject d, Comment& c, int depth) {
   c.id = d["id"] | "";
-  c.fullname = d["name"] | "";
+  const std::string name = d["name"] | "";
+  c.fullname = name.empty() ? withPrefix(c.id, "t1_") : name;
   c.body = d["body"] | "";
   c.author = d["author"] | "";
   c.subreddit = d["subreddit"] | "";
